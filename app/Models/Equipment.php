@@ -33,10 +33,10 @@ class Equipment extends Model
 
     public function getImageUrlAttribute()
     {
-        if (empty($this->image)) {
-            return null;
+        if ($this->image) {
+            return asset('uploads/equipment/' . $this->image);
         }
-        return asset('uploads/equipment/' . $this->image);
+        return asset('images/default-equipment.png'); // or use a placeholder
     }
 
     public function isAvailable()

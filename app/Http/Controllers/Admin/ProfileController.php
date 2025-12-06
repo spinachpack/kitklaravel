@@ -32,7 +32,7 @@ class ProfileController extends Controller
     }
 
     public function updatePicture(Request $request)
-    {
+{
         $user = auth()->user();
 
         $request->validate([
@@ -41,12 +41,15 @@ class ProfileController extends Controller
 
         // Delete old picture
         if ($user->profile_picture && $user->profile_picture !== 'default-avatar.png') {
-            Storage::delete('public/profiles/' . $user->profile_picture);
+            $oldPath = public_path('uploads/profiles/' . $user->profile_picture);
+            if (file_exists($oldPath)) {
+                unlink($oldPath);
+            }
         }
 
         // Upload new picture
         $filename = 'profile_' . $user->id . '_' . time() . '.' . $request->file('profile_picture')->extension();
-        $request->file('profile_picture')->storeAs('public/profiles', $filename);
+        $request->file('profile_picture')->move(public_path('uploads/profiles'), $filename);
 
         $user->update(['profile_picture' => $filename]);
 

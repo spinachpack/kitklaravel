@@ -94,28 +94,28 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Start Date</label>
-                            <input type="date" name="start_date" class="form-control" min="{{ date('Y-m-d') }}" required>
+                            <input type="date" name="start_date" class="form-control" value="{{ old('start_date') }}" min="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">End Date</label>
-                            <input type="date" name="end_date" class="form-control" min="{{ date('Y-m-d') }}" required>
+                            <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}" min="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Start Time</label>
-                            <input type="time" name="start_time" class="form-control" required>
+                            <input type="time" name="start_time" class="form-control" value="{{ old('start_time') }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">End Time</label>
-                            <input type="time" name="end_time" class="form-control" required>
+                            <input type="time" name="end_time" class="form-control" value="{{ old('end_time') }}" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Purpose of Use</label>
-                        <textarea name="purpose" class="form-control" rows="4" placeholder="Please describe why you need this equipment..." required></textarea>
+                        <textarea name="purpose" class="form-control" rows="4"  placeholder="Please describe why you need this equipment..." required>{{ old('purpose') }}</textarea>
                         <small class="text-muted">Provide detailed information about your intended use</small>
                     </div>
 

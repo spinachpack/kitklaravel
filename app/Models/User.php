@@ -64,11 +64,22 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function getProfilePictureUrlAttribute()
-    {
-        if (empty($this->profile_picture) || $this->profile_picture === 'default-avatar.png') {
-            return asset('uploads/profiles/default-avatar.png');
+   public function getProfilePictureUrlAttribute()
+{
+    // If profile_picture is empty or default, check if default exists
+    if (empty($this->profile_picture) || $this->profile_picture === 'default-avatar.png') {
+        $defaultPath = public_path('uploads/profiles/default-avatar.png');
+        
+        // If default doesn't exist, use a generic placeholder
+        if (!file_exists($defaultPath)) {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->full_name) . '&background=1e5a96&color=fff&size=150';
         }
-        return asset('uploads/profiles/' . $this->profile_picture);
+        
+        return asset('uploads/profiles/default-avatar.png');
     }
+    
+    return asset('uploads/profiles/' . $this->profile_picture);
+}
+
+
 }
