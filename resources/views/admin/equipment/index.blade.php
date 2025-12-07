@@ -203,8 +203,9 @@ function editEquipment(item) {
     document.getElementById('edit_status').value = item.status;
     
     if (item.image) {
+        const imageUrl = item.image_url || '/uploads/equipment/' + item.image;
         document.getElementById('current_image_preview').innerHTML = 
-            '<img src="' + item.image_url + '" style="max-width: 150px;" class="img-thumbnail">';
+            '<img src="' + imageUrl + '" style="max-width: 150px;" class="img-thumbnail">';
     } else {
         document.getElementById('current_image_preview').innerHTML = '';
     }

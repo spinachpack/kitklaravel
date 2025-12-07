@@ -73,7 +73,7 @@ class EquipmentController extends Controller
             }
 
             $imageName = 'equip_' . time() . '_' . uniqid() . '.' . $request->file('image')->extension();
-            $request->file('image')->storeAs('public/equipment', $imageName);
+            $request->file('image')->move(public_path('uploads/equipment'), $imageName);
             $data['image'] = $imageName;
         }
 
