@@ -19,12 +19,24 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'department' => 'required|string|max:100',
-        ]);
+        // Check if this is the original admin
+        $isOriginalAdmin = ($user->id_number === 'ADMIN001' || $user->email === 'admin@ucbanilad.edu.ph');
+
+        // If original admin, don't allow department change
+        if ($isOriginalAdmin) {
+            $validated = $request->validate([
+                'first_name' => 'required|string|max:50',
+                'last_name' => 'required|string|max:50',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+            ]);
+        } else {
+            $validated = $request->validate([
+                'first_name' => 'required|string|max:50',
+                'last_name' => 'required|string|max:50',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'department' => 'required|string|max:100',
+            ]);
+        }
 
         $user->update($validated);
 
@@ -32,7 +44,7 @@ class ProfileController extends Controller
     }
 
     public function updatePicture(Request $request)
-{
+    {
         $user = auth()->user();
 
         $request->validate([

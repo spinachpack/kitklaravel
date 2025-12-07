@@ -73,18 +73,23 @@
 
                     <div class="mb-3">
                         <label class="form-label">Department</label>
-                        <select name="department" class="form-select @error('department') is-invalid @enderror" required>
-                            <option value="">Select Department</option>
-                            @php
-                                $departments = ['Computer Science', 'Engineering', 'Business Administration', 'Education', 'Arts and Sciences', 'Medical Technology', 'Nursing', 'Architecture', 'Administration', 'Sports Department'];
-                            @endphp
-                            @foreach($departments as $dept)
-                                <option value="{{ $dept }}" {{ $user->department == $dept ? 'selected' : '' }}>{{ $dept }}</option>
-                            @endforeach
-                        </select>
-                        @error('department')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @if(auth()->user()->id_number === 'ADMIN001' || auth()->user()->email === 'admin@ucbanilad.edu.ph')
+                            <input type="text" class="form-control" value="{{ $user->department }}" disabled>
+                            <small class="text-muted">Original administrator's department cannot be changed</small>
+                        @else
+                            <select name="department" class="form-select @error('department') is-invalid @enderror" required>
+                                <option value="">Select Department</option>
+                                @php
+                                    $departments = ['Computer Science', 'Engineering', 'Business Administration', 'Education', 'Arts and Sciences', 'Medical Technology', 'Nursing', 'Architecture', 'Administration', 'Sports Department'];
+                                @endphp
+                                @foreach($departments as $dept)
+                                    <option value="{{ $dept }}" {{ $user->department == $dept ? 'selected' : '' }}>{{ $dept }}</option>
+                                @endforeach
+                            </select>
+                            @error('department')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        @endif
                     </div>
 
                     <button type="submit" class="btn btn-primary">

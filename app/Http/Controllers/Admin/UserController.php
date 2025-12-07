@@ -18,10 +18,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Prevent changing original admin (ID 1)
-        if ($user->id == 1) {
-            return back()->with('error', 'Cannot change the role of the original administrator.');
-        }
+        // Prevent changing original admin
+        if ($user->id_number === 'ADMIN001' || $user->email === 'admin@ucbanilad.edu.ph') {
+        return back()->with('error', 'Cannot change the role of the original administrator.');
+    }
 
         $validated = $request->validate([
             'role' => 'required|in:user,department,admin',

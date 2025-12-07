@@ -45,12 +45,14 @@
                             </td>
                             <td>{{ $user->created_at->format('M d, Y') }}</td>
                             <td>
-                                @if($user->id != auth()->id())
+                                @if($user->id_number === 'ADMIN001' || $user->email === 'admin@ucbanilad.edu.ph')
+                                    <span class="badge bg-danger">Protected Admin</span>
+                                @elseif($user->id == auth()->id())
+                                    <span class="text-muted">Current User</span>
+                                @else
                                     <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#manageModal{{ $user->id }}">
                                         <i class="fas fa-cog"></i> Manage
                                     </button>
-                                @else
-                                    <span class="text-muted">Current User</span>
                                 @endif
                             </td>
                         </tr>
