@@ -47,6 +47,16 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
+            @media (max-width: 992px) {
+        .sidebar {
+            width: 100%;
+            min-height: auto;
+            position: relative;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+    }
         @yield('extra-styles')
     </style>
 </head>
